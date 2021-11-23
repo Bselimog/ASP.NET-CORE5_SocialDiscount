@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.EntityFreamwork
+namespace DataAccessLayer.EntityFramework
 {
-   public class EfAboutRepository: GenericRepository<About>, IAboutDal
+    public class EfAboutRepository : GenericRepository<About>, IAboutDal
     {
     }
 }

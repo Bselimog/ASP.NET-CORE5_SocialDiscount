@@ -8,18 +8,42 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Concrete
 {
-  public class Context:DbContext
+    public class Context : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=LAPTOP-M933CI07;database=CoreBlogDb;integrated security=true;");
+            optionsBuilder.UseSqlServer("server=DESKTOP-RLC2A77;database=CoreBlogDb; integrated security=true");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MessageTwo>()
+                .HasOne(x => x.SenderUser)
+                .WithMany(x => x.WriterSender)
+                .HasForeignKey(x => x.Sender)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            modelBuilder.Entity<MessageTwo>()
+                .HasOne(x => x.ReceiverUser)
+                .WithMany(x => x.WriterReceiver)
+                .HasForeignKey(x => x.Receiver)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+        }
+
+
         public DbSet<About> Abouts { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Category> Categorys { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Writer> Writers { get; set; }
+        public DbSet<NewsLetter> NewsLetters { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<BlogRayting> BlogRaytings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageTwo> MessageTwos { get; set; }
+
 
     }
 }

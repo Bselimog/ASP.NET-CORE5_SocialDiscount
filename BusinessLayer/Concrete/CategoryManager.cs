@@ -1,6 +1,6 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
-using DataAccessLayer.EntityFreamwork;
+using DataAccessLayer.EntityFramework;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
+
     public class CategoryManager : ICategoryService
     {
         ICategoryDal _categoryDal;
@@ -18,30 +19,35 @@ namespace BusinessLayer.Concrete
         {
             _categoryDal = categoryDal;
         }
-        public void CategoryAdd(Category category)
+        public void Add(Category category)
         {
 
-            _categoryDal.Insert(category);
+            _categoryDal.Add(category);
         }
 
-        public void CategoryDelete(Category category)
+        public void Delete(Category category)
         {
             _categoryDal.Delete(category);
         }
 
-        public void CategoryUpdate(Category category)
+        public List<Category> GetAll()
+        {
+            return _categoryDal.GetAll();
+        }
+
+        public List<Category> GetAll(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Category GetById(int categoryId)
+        {
+            return _categoryDal.Get(categoryId);
+        }
+
+        public void Update(Category category)
         {
             _categoryDal.Update(category);
-        }
-
-        public Category GetById(int id)
-        {
-            return _categoryDal.GetByID(id);
-        }
-
-        public List<Category> GetList()
-        {
-            return _categoryDal.GetListAll();
         }
     }
 }

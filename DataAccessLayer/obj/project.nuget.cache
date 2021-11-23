@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pF8ZoofT0yaqC8J0DCKl38ifo3IuvAwBMs/LDtMT1At50uBzvcSxF9zEZXbIJDrZ1Aml+gcYiM191cMMDtBs0Q==",
+  "dgSpecHash": "Em/Q3pAwrcVYwTODun8SHWxu+I7obgDEmP1s1KiQMYmojhK0unbR3y0NEdHJFjeaB3I7I1wqjQgBdw098xV0DA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Melike Selimoğlu\\source\\repos\\DemoCore\\DataAccessLayer\\DataAccessLayer.csproj",
+  "projectFilePath": "C:\\Users\\Melike Selimoğlu\\Documents\\GitHub\\ASP.NET-CORE5_SocialDiscount\\DataAccessLayer\\DataAccessLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Melike Selimoğlu\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Melike Selimoğlu\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.EntityFreamwork
+namespace DataAccessLayer.EntityFramework
 {
     public class EfContactRepository : GenericRepository<Contact>, IContactDal
     {

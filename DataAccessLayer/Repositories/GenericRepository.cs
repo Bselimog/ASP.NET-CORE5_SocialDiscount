@@ -3,38 +3,51 @@ using DataAccessLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class GenericRepository<T> : IGenericDal<T> where T : class
+    public class GenericRepository<T> : IEntityRepository<T> where T : class
     {
-        Context c = new Context();
-        public void Delete(T t)
+        public void Add(T entity)
         {
-            c.Remove(t);
-            c.SaveChanges();
+            using var context = new Context();
+            context.Add(entity);
+            context.SaveChanges();
         }
 
-        public T GetByID(int id)
+        public void Delete(T entity)
         {
-          return c.Set<T>().Find();
+            using var context = new Context();
+            context.Remove(entity);
+            context.SaveChanges();
         }
 
-        public List<T> GetListAll()
+        public T Get(int id)
         {
-            return c.Set<T>().ToList();
+            using var context = new Context();
+            return context.Set<T>().Find(id);
         }
 
-        public void Insert(T t)
+        public List<T> GetAll()
         {
-            throw new NotImplementedException();
+            using var context = new Context();
+            return context.Set<T>().ToList();
         }
 
-        public void Update(T t)
+        public List<T> GetAll(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            using var context = new Context();
+            return context.Set<T>().Where(filter).ToList();
+        }
+
+        public void Update(T entity)
+        {
+            using var context = new Context();
+            context.Update(entity);
+            context.SaveChanges();
         }
     }
 }
