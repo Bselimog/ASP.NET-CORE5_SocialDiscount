@@ -9,45 +9,58 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class GenericRepository<T> : IEntityRepository<T> where T : class
+    public class GenericRepository<T> : IGenericDal<T> where T : class
     {
-        public void Add(T entity)
+        public void Delete(T t)
         {
-            using var context = new Context();
-            context.Add(entity);
-            context.SaveChanges();
+            using var c = new Context();
+            c.Remove(t);
+            c.SaveChanges();
         }
 
-        public void Delete(T entity)
+        public T GetByID(int id)
         {
-            using var context = new Context();
-            context.Remove(entity);
-            context.SaveChanges();
+            using var c = new Context();
+            return c.Set<T>().Find(id);
         }
 
-        public T Get(int id)
+        public List<T> GetListAll(Expression<Func<T, bool>> filter = null)
         {
-            using var context = new Context();
-            return context.Set<T>().Find(id);
+            using (var c = new Context())
+            {
+                return filter == null ?
+                    c.Set<T>().ToList() :
+                c.Set<T>().Where(filter).ToList();
+            }
         }
 
-        public List<T> GetAll()
+        public void Insert(T t)
         {
-            using var context = new Context();
-            return context.Set<T>().ToList();
+            using var c = new Context();
+            c.Add(t);
+            c.SaveChanges();
         }
 
-        public List<T> GetAll(Expression<Func<T, bool>> filter)
+        public T GetByFilter(Expression<Func<T, bool>> filter = null)
         {
-            using var context = new Context();
-            return context.Set<T>().Where(filter).ToList();
+            using var c = new Context();
+            if (filter == null)
+                return c.Set<T>().FirstOrDefault();
+            else
+                return c.Set<T>().FirstOrDefault(filter);
         }
 
-        public void Update(T entity)
+        //public List<T> GetListAll(Expression<Func<T, bool>> filter)
+        //{
+        //    using var c = new Context();
+        //    return c.Set<T>().Where(filter).ToList();
+        //}
+
+        public void Update(T t)
         {
-            using var context = new Context();
-            context.Update(entity);
-            context.SaveChanges();
+            using var c = new Context();
+            c.Update(t);
+            c.SaveChanges();
         }
     }
 }

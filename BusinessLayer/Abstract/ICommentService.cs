@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Abstract
 {
-    public interface ICommentService : IGenericService<Comment>
+    public interface ICommentService
     {
-        //void Add(Comment comment);
-        //void Delete(Comment comment);
-        //void Update(Comment comment);
-        //List<Comment> GetAll(int id);
-        //Comment GetById(int commentId);
+        void CommentAdd(Comment comment);
+        //  void CommentDelete(Comment comment);
+        //  void CommentUpdate(Comment comment);
+        List<Comment> GetList(int id);
+        //    Comment GetById(int id);
     }
 }

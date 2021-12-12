@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,46 +13,40 @@ namespace BusinessLayer.Concrete
     public class MessageManager : IMessageService
     {
         IMessageDal _messageDal;
+
         public MessageManager(IMessageDal messageDal)
         {
             _messageDal = messageDal;
         }
 
-        public void Add(Message message)
+        public List<Message> GetList(Expression<Func<Message, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _messageDal.GetListAll(filter);
         }
 
-        public void Delete(Message message)
+        public void TAdd(Message t)
         {
-            throw new NotImplementedException();
+            _messageDal.Insert(t);
         }
 
-        public List<Message> GetAll()
+        public void TDelete(Message t)
         {
-            throw new NotImplementedException();
+            _messageDal.Delete(t);
         }
 
-        public List<Message> GetAll(int id)
+        public Message TGetByFilter(Expression<Func<Message, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _messageDal.GetByFilter(filter);
         }
 
-        public Message GetById(int id)
+        public Message TGetById(int id)
         {
-            throw new NotImplementedException();
+            return _messageDal.GetByID(id);
         }
 
-        public List<Message> GetInboxListByWriter(string inbox)
+        public void TUpdate(Message t)
         {
-            return _messageDal.GetAll(x => x.Receiver == inbox);
+            _messageDal.Update(t);
         }
-
-        public void Update(Message message)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

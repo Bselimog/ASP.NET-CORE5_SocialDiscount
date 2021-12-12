@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,63 +13,61 @@ namespace BusinessLayer.Concrete
     public class BlogManager : IBlogService
     {
         IBlogDal _blogDal;
+
         public BlogManager(IBlogDal blogDal)
         {
             _blogDal = blogDal;
         }
-        public void Add(Blog blog)
-        {
-            _blogDal.Add(blog);
-        }
-
-        public void Delete(Blog blog)
-        {
-            _blogDal.Delete(blog);
-        }
-
-        public List<Blog> GetAll()
-        {
-            return _blogDal.GetAll();
-        }
-
-        public Blog GetById(int blogId)
-        {
-            return _blogDal.Get(blogId);
-        }
-
-        public List<Blog> GetListWithCategory()
+        public List<Blog> GetBlogListWithCategory()
         {
             return _blogDal.GetListWithCategory();
         }
-
-        public void Update(Blog blog)
+        public List<Blog> GetListWithCategoryByWriterBm(int id)
         {
-            _blogDal.Update(blog);
+            return _blogDal.GetListWithCategoryByWriter(id);
         }
 
-        public List<Blog> GetBlogById(int id)
+        public Blog TGetById(int id)
         {
-            return _blogDal.GetAll(x => x.BlogID == id);
+            return _blogDal.GetByID(id);
+        }
+        public List<Blog> GetBlogByID(int id)
+        {
+            return _blogDal.GetListAll(x => x.BlogID == id);
+        }
+
+        public List<Blog> GetList(Expression<Func<Blog, bool>> filter)
+        {
+            return _blogDal.GetListAll(filter);
+        }
+
+        public List<Blog> GetLast3Blog(int number)
+        {
+            return _blogDal.GetListAll().TakeLast(number).ToList();
         }
 
         public List<Blog> GetBlogListByWriter(int id)
         {
-            return _blogDal.GetAll(x => x.WriterID == id);
+            return _blogDal.GetListAll(x => x.WriterID == id);
         }
 
-        public List<Blog> GetLast3Blog()
+        public void TAdd(Blog t)
         {
-            return _blogDal.GetAll().Take(3).ToList();
+            _blogDal.Insert(t);
         }
 
-        public List<Blog> GetAll(int id)
+        public void TDelete(Blog t)
         {
-            throw new NotImplementedException();
+            _blogDal.Delete(t);
         }
 
-        public List<Blog> GetListWithCategoryByWriter(int id)
+        public void TUpdate(Blog t)
         {
-            return _blogDal.GetListWithCategoryByWriter(id);
+            _blogDal.Update(t);
+        }
+        public Blog TGetByFilter(Expression<Func<Blog, bool>> filter = null)
+        {
+            return _blogDal.GetByFilter(filter);
         }
     }
 }

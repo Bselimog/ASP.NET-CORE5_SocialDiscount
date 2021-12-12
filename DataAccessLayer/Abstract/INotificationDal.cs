@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Abstract
 {
-    public interface INewsLetterDal : IEntityRepository<NewsLetter>
+    public interface INotificationDal : IGenericDal<Notification>
     {
     }
 }

@@ -9,41 +9,18 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-    public class CommentManager : ICommentService
+    public class ContactManager : IContactService
     {
-        private ICommentDal _commentDal;
-        public CommentManager(ICommentDal commentDal)
+        IContactDal _contactDal;
+
+        public ContactManager(IContactDal contactDal)
         {
-            _commentDal = commentDal;
-        }
-        public void Add(Comment comment)
-        {
-            _commentDal.Add(comment);
+            _contactDal = contactDal;
         }
 
-        public void Delete(Comment comment)
+        public void ContactAdd(Contact contact)
         {
-            _commentDal.Delete(comment);
-        }
-
-        public List<Comment> GetAll(int id)
-        {
-            return _commentDal.GetAll(x => x.BlogID == id);
-        }
-
-        public List<Comment> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Comment GetById(int commentId)
-        {
-            return _commentDal.Get(commentId);
-        }
-
-        public void Update(Comment comment)
-        {
-            _commentDal.Update(comment);
+            _contactDal.Insert(contact);
         }
     }
 }

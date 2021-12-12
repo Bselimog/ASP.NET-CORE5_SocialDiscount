@@ -11,39 +11,21 @@ namespace BusinessLayer.Concrete
 {
     public class CommentManager : ICommentService
     {
-        private ICommentDal _commentDal;
+        ICommentDal _commentDal;
+
         public CommentManager(ICommentDal commentDal)
         {
             _commentDal = commentDal;
         }
-        public void Add(Comment comment)
+
+        public void CommentAdd(Comment comment)
         {
-            _commentDal.Add(comment);
+            _commentDal.Insert(comment);
         }
 
-        public void Delete(Comment comment)
+        public List<Comment> GetList(int id)
         {
-            _commentDal.Delete(comment);
-        }
-
-        public List<Comment> GetAll(int id)
-        {
-            return _commentDal.GetAll(x => x.BlogID == id);
-        }
-
-        public List<Comment> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Comment GetById(int commentId)
-        {
-            return _commentDal.Get(commentId);
-        }
-
-        public void Update(Comment comment)
-        {
-            _commentDal.Update(comment);
+            return _commentDal.GetListAll(x => x.BlogID == id);
         }
     }
 }

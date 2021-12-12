@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,38 +13,40 @@ namespace BusinessLayer.Concrete
     public class NotificationManager : INotificationService
     {
         INotificationDal _notificationDal;
+
         public NotificationManager(INotificationDal notificationDal)
         {
             _notificationDal = notificationDal;
         }
-        public void Add(Notification notification)
+
+        public List<Notification> GetList(Expression<Func<Notification, bool>> filter = null)
         {
-            _notificationDal.Add(notification);
+            return _notificationDal.GetListAll(filter);
         }
 
-        public void Delete(Notification notification)
+        public void TAdd(Notification t)
         {
-            _notificationDal.Delete(notification);
+            _notificationDal.Insert(t);
         }
 
-        public List<Notification> GetAll()
+        public void TDelete(Notification t)
         {
-            return _notificationDal.GetAll();
+            _notificationDal.Delete(t);
         }
 
-        public List<Notification> GetAll(int id)
+        public Notification TGetByFilter(Expression<Func<Notification, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _notificationDal.GetByFilter(filter);
         }
 
-        public Notification GetById(int id)
+        public Notification TGetById(int id)
         {
-            return _notificationDal.Get(id);
+           return  _notificationDal.GetByID(id);
         }
 
-        public void Update(Notification notification)
+        public void TUpdate(Notification t)
         {
-            _notificationDal.Update(notification);
+            _notificationDal.Update(t);
         }
     }
 }

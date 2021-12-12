@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,39 +13,45 @@ namespace BusinessLayer.Concrete
     public class AboutManager : IAboutService
     {
         IAboutDal _aboutDal;
+
         public AboutManager(IAboutDal aboutDal)
         {
             _aboutDal = aboutDal;
         }
 
-        public void Add(About about)
-        {
-            _aboutDal.Add(about);
-        }
-
-        public void Delete(About about)
-        {
-            _aboutDal.Delete(about);
-        }
-
-        public List<About> GetAll()
-        {
-            return _aboutDal.GetAll();
-        }
-
-        public List<About> GetAll(int id)
+        public About TGetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public About GetById(int id)
+        public List<About> GetList()
         {
-            return _aboutDal.Get(id);
+            return _aboutDal.GetListAll();
         }
 
-        public void Update(About about)
+        public void TAdd(About t)
         {
-            _aboutDal.Update(about);
+            throw new NotImplementedException();
+        }
+
+        public void TDelete(About t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TUpdate(About t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<About> GetList(Expression<Func<About, bool>> filter)
+        {
+            return _aboutDal.GetListAll(filter);
+        }
+
+        public About TGetByFilter(Expression<Func<About, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

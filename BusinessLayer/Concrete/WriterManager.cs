@@ -4,6 +4,7 @@ using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,43 +13,50 @@ namespace BusinessLayer.Concrete
     public class WriterManager : IWriterService
     {
         IWriterDal _writerDal;
+
         public WriterManager(IWriterDal writerDal)
         {
             _writerDal = writerDal;
         }
-        public void Add(Writer writer)
+
+        public List<Writer> GetList()
         {
-            _writerDal.Add(writer);
+            return _writerDal.GetListAll();
         }
 
-        public void Delete(Writer writer)
+        public List<Writer> GetList(Expression<Func<Writer, bool>> filter = null)
         {
-            _writerDal.Delete(writer);
-        }
-
-        public List<Writer> GetAll()
-        {
-            return _writerDal.GetAll();
-        }
-
-        public List<Writer> GetAll(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Writer GetById(int writerId)
-        {
-            return _writerDal.Get(writerId);
+            return _writerDal.GetListAll(filter);
         }
 
         public List<Writer> GetWriterById(int id)
         {
-            return _writerDal.GetAll(x => x.WriterID == id);
+            return _writerDal.GetListAll(x => x.WriterID == id);
         }
 
-        public void Update(Writer writer)
+        public void TAdd(Writer t)
         {
-            _writerDal.Update(writer);
+            _writerDal.Insert(t);
+        }
+
+        public void TDelete(Writer t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Writer TGetByFilter(Expression<Func<Writer, bool>> filter = null)
+        {
+            return _writerDal.GetByFilter(filter);
+        }
+
+        public Writer TGetById(int id)
+        {
+            return _writerDal.GetByID(id);
+        }
+
+        public void TUpdate(Writer t)
+        {
+            _writerDal.Update(t);
         }
     }
 }

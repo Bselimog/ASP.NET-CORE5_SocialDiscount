@@ -4,31 +4,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BusinessLayer.ValidationRules.FluentValidation
+namespace BusinessLayer.ValidationRules
 {
     public class WriterValidator : AbstractValidator<Writer>
     {
         public WriterValidator()
         {
-            RuleFor(x => x.WriterName).NotEmpty().WithMessage("Boş Geçilemez");
-            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Boş Geçilemez");
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Boş Geçilemez");
-            RuleFor(x => x.WriterName).MinimumLength(2).WithMessage("İsim en az 2 karakter olmalıdır");
-            RuleFor(x => x.WriterName).MaximumLength(50).WithMessage("İsim en fazla 50 karakter olmalıdır");
-            //RuleFor(x => x).Custom((x, context) =>
-            //{
-            //    if (x.Password != x.RepeatPassword)
-            //    {
-            //        context.AddFailure(nameof(x.Password), "Şifreler aynı değil");
-            //    }
-            //});
-
-
-            RuleFor(x => x.Password).Matches(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])").WithMessage("En az 1 küçük, 1 büyük harf ve 1 sayı bulunmalıdır");
-
-
+            RuleFor(x => x.WriterName).NotEmpty().WithMessage("Lütfen Yazar Adı Soyadı kısmını boş geçmeyiniz!");
+            RuleFor(x => x.WriterMail).NotEmpty().WithMessage("Lütfen Mail Adresi kısmını boş geçmeyiniz!");
+            RuleFor(x => x.WriterPassword).NotEmpty().WithMessage("Şifre boş geçilemez!");
+            RuleFor(x => x.WriterName).MinimumLength(2).WithMessage("Lütfen en az 2 karakterlik veri girişi yapınız!");
+            RuleFor(x => x.WriterName).MaximumLength(50).WithMessage("Lütfen en fazla 50 karakterlik veri girişi yapınız!");
+            RuleFor(x => x.WriterPassword).Must(IsPasswordValid).WithMessage("Parolanızda en az bir küçük harf bir büyük harf ve rakam olmalıdır!");
+        }
+        private bool IsPasswordValid(string arg)
+        {
+            try
+            {
+                Regex regex = new Regex(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[0-9])[A-Za-z\d]");
+                return regex.IsMatch(arg);
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

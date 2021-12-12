@@ -1,17 +1,16 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
-using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLayer.Concrete
 {
-
     public class CategoryManager : ICategoryService
     {
         ICategoryDal _categoryDal;
@@ -19,35 +18,39 @@ namespace BusinessLayer.Concrete
         {
             _categoryDal = categoryDal;
         }
-        public void Add(Category category)
+        public Category TGetById(int id)
         {
-
-            _categoryDal.Add(category);
+            return _categoryDal.GetByID(id);
+        }
+        public List<Category> GetList()
+        {
+            return _categoryDal.GetListAll();
+        }
+        public void TAdd(Category t)
+        {
+            _categoryDal.Insert(t);
+        }
+        public void TDelete(Category t)
+        {
+            _categoryDal.Update(t);
+        }
+        public void TUpdate(Category t)
+        {
+            _categoryDal.Update(t);
         }
 
-        public void Delete(Category category)
+        public List<Category> GetList(Expression<Func<Category, bool>> filter = null)
         {
-            _categoryDal.Delete(category);
+            return filter == null ?
+                 _categoryDal.GetListAll() :
+                 _categoryDal.GetListAll(filter);
         }
 
-        public List<Category> GetAll()
+        public Category TGetByFilter(Expression<Func<Category, bool>> filter = null)
         {
-            return _categoryDal.GetAll();
-        }
-
-        public List<Category> GetAll(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Category GetById(int categoryId)
-        {
-            return _categoryDal.Get(categoryId);
-        }
-
-        public void Update(Category category)
-        {
-            _categoryDal.Update(category);
+            return filter == null ?
+                _categoryDal.GetByFilter() :
+                _categoryDal.GetByFilter(filter);
         }
     }
 }
